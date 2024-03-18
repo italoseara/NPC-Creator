@@ -71,7 +71,6 @@ copyButton.addEventListener('click', function() {
 
 const skinInput = form.querySelector('#skin');
 setInterval(() => {
-    console.log('checking skin');
     if (Date.now() - lastKeyboardInput < 500) return;
 
     const skin = skinInput.value;
