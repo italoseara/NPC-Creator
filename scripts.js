@@ -38,8 +38,6 @@ form.addEventListener('submit', async function(event) {
     const skin = form.querySelector('#skin').value;
     const skinData = await getSkinData(skin);
 
-    console.log(name, description, rarity, skin);
-
     yml += "  " + id + ":\n";
     yml += "    name: \"" + name + "\"\n";
     yml += "    description: \"" + description + "\"\n";
