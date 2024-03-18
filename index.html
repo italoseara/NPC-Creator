@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>Criar NPCs</h1>
+  <form>
+    <div class="centered">
+      <input id="name" type="text" placeholder="Nome" required autocomplete="off" />
+      <input id="description" type="text" placeholder="Descrição" required autocomplete="off" />
+      <select id="rarity" required>
+        <option value="" hidden>Selecione uma raridade</option>
+        <option value="COMMON">Comum</option>
+        <option value="RARE">Raro</option>
+        <option value="EPIC">Épico</option>
+        <option value="LEGENDARY">Lendário</option>
+      </select>
+      <input id="skin" type="text" placeholder="Skin (Nome do jogador)" required autocomplete="off" />
+      <button type="submit" id="add" required>Adicionar</button>
+    </div>
+    <img id="skin-img" src="img/steve.png" alt="128" />
+  </form>
+  <code id="output" type="text">
+    <img id="copy" src="img/copied-icon.svg" alt="SVG Image" />
+    <pre></pre>
+  </code>
+  <script src="scripts.js"></script>
+</body>
+
+</html>
