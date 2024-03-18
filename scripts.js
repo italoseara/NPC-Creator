@@ -1,6 +1,8 @@
 let yml = "nps:\n";
 let searching = false;
 
+let lastKeyboardInput = 0;
+
 const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
 const form = document.querySelector('form');
 
@@ -13,26 +15,13 @@ const slugify = (text) => {
         .replace(/-+$/, '');
 }
 
-const getUniqueId = async (nickname) => {
-    const url = "https://api.mojang.com/users/profiles/minecraft/" + nickname;
-
-    const response = await fetch(proxyUrl + url);
-    const data = await response.json();
-
-    return data.id;
-}
-
 const getSkinData = async (nickname) => {
-    const uuid = await getUniqueId(nickname);
-    const url = "https://sessionserver.mojang.com/session/minecraft/profile/" + uuid + "?unsigned=false";
+    const url = "https://api.ashcon.app/mojang/v2/user/" + nickname;
 
-    const response = await fetch(proxyUrl + url);
+    const response = await fetch(url);
     const data = await response.json();
 
-    return {
-        signature: data.properties[0].signature,
-        texture: data.properties[0].value
-    }
+    return data.textures.raw;
 }
 
 form.addEventListener('submit', async function(event) {
@@ -57,7 +46,7 @@ form.addEventListener('submit', async function(event) {
     yml += "    rarity: " + rarity + "\n";
     yml += "    skin:\n";
     yml += "      signature: \"" + skinData.signature + "\"\n";
-    yml += "      texture: \"" + skinData.texture + "\"\n";
+    yml += "      texture: \"" + skinData.value + "\"\n";
 
     const output = document.querySelector('#output pre');
     output.innerHTML = yml;
@@ -71,14 +60,6 @@ form.addEventListener('submit', async function(event) {
     form.querySelector('#skin').value = '';
 });
 
-const skinInput = form.querySelector('#skin');
-skinInput.addEventListener('input', async function() {
-    const nickname = skinInput.value;
-
-    const image = document.querySelector('#skin-img');
-    image.src = "https://mc-heads.net/body/" + nickname + "/128";
-});
-
 const copyButton = document.querySelector('#copy');
 
 copyButton.addEventListener('click', function() {
@@ -86,4 +67,20 @@ copyButton.addEventListener('click', function() {
     const text = output.innerText;
 
     navigator.clipboard.writeText(text);
+});
+
+const skinInput = form.querySelector('#skin');
+setInterval(() => {
+    console.log('checking skin');
+    if (Date.now() - lastKeyboardInput < 500) return;
+
+    const skin = skinInput.value;
+    if (!skin) return;
+
+    const image = document.querySelector('#skin-img');
+    image.src = "https://mc-heads.net/body/" + skin + "/128";
+}, 100);
+
+skinInput.addEventListener('input', function() {
+    lastKeyboardInput = Date.now();
 });
