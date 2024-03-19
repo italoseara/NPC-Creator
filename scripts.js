@@ -1,9 +1,7 @@
 let yml = "nps:\n";
 let searching = false;
-
 let lastKeyboardInput = 0;
 
-const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
 const form = document.querySelector('form');
 
 const slugify = (text) => {
@@ -56,6 +54,8 @@ form.addEventListener('submit', async function(event) {
     form.querySelector('#description').value = '';
     form.querySelector('#rarity').value = '';
     form.querySelector('#skin').value = '';
+
+    searching = false;
 });
 
 const copyButton = document.querySelector('#copy');
